@@ -1,0 +1,29 @@
+version: "3"
+services:
+  postgres:
+    image: "postgres:latest"
+    environment:
+      - POSTGRES_PASSWORD=postgres_password
+  redis:
+    image: "redis:latest"
+  api:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./
+    volumes:
+      # Ce volumesert sert à spécifier à docker de ne pas l'override
+      - /app/node_modules
+      # Ce volume est pour spécifier à docker de copier tout ce qui se trouve dans ce folder et de le copier
+      # dans le /app du container
+      # A chaque fois que l'pplication voudra acceder au file dans le container dans le  /app dir
+      # => except pour le node_module folder => elle sera redirigée vers le dir server
+      # => chaque changement qui sera fait dans notre source code sera automatiquement reflété dans le container
+      - ./:/app
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - PGUSER=postgres
+      - PGHOST=postgres
+      - PGDATABASE=postgres
+      - PGPASSWORD=postgres_password
+      - PGPORT=5432
