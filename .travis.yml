@@ -1,0 +1,24 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t stevorc/react-test -f ./clent/Dockerfile.dev ./client
+
+script:
+  - docker run stevorc/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t stevorc/multi-client ./client
+  - docker build -t stevorc/multi-nginx ./nginx
+  - docker build -t stevorc/multi-api ./server
+  - docker build -t stevorc/multi-worker ./
+
+# Log to the docker HUB
+#Cette commande va lire le psw et va la passer via pipe à la en stdin de la 2eme commande
+- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --pasword-stdin
+# Take the image and push to the docker HUB
+- docker push stevorc/multi-client
+- docker push stevorc/multi-nginx
+- docker push stevorc/multi-api
+- docker push stevorc/multi-worker
