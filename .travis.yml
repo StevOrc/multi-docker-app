@@ -16,7 +16,7 @@ after_success:
 
 # Log to the docker HUB
 #Cette commande va lire le psw et va la passer via pipe à la en stdin de la 2eme commande
-- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --pasword-stdin
+- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 # Take the image and push to the docker HUB
 - docker push stevorc/multi-client
 - docker push stevorc/multi-nginx
