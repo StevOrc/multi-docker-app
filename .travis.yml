@@ -3,7 +3,7 @@ services:
   - docker
 
 before_install:
-  - docker build -t stevorc/react-test -f ./clent/Dockerfile.dev ./client
+  - docker build -t stevorc/react-test -f ./client/Dockerfile.dev ./client
 
 script:
   - docker run stevorc/react-test npm test -- --coverage
@@ -12,7 +12,7 @@ after_success:
   - docker build -t stevorc/multi-client ./client
   - docker build -t stevorc/multi-nginx ./nginx
   - docker build -t stevorc/multi-api ./server
-  - docker build -t stevorc/multi-worker ./
+  - docker build -t stevorc/multi-worker ./worker
 
 # Log to the docker HUB
 #Cette commande va lire le psw et va la passer via pipe à la en stdin de la 2eme commande
