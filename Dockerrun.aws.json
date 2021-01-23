@@ -5,19 +5,22 @@
             "name": "client",
             "image": "geksdk01/multi-client",
             "hostname": "client",
-            "essential": false
+            "essential": false,
+            "memory": 128
         },
         {
             "name": "api",
             "image": "geksdk01/multi-api",
             "hostname": "api",
-            "essential": false
+            "essential": false,
+            "memory": 128
         },
         {
             "name": "worker",
             "image": "geksdk01/multi-worker",
             "hostname": "worker",
-            "essential": false
+            "essential": false,
+            "memory": 128
         },
         {
             "name": "nginx",
@@ -29,7 +32,8 @@
                     "containerPort": 80
                 }
             ],
-            "links": ["api", "client"]
+            "links": ["api", "client"],
+            "memory": 128
         }
     ]
 }
